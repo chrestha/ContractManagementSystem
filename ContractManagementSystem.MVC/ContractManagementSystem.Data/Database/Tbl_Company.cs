@@ -14,10 +14,19 @@ namespace ContractManagementSystem.Data.Database
     
     public partial class Tbl_Company
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Tbl_Company()
+        {
+            this.Tbl_Contact = new HashSet<Tbl_Contact>();
+        }
+    
         public int ID { get; set; }
         public string Name { get; set; }
         public string CompanyABN_CAN { get; set; }
         public string Description { get; set; }
         public string URL { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Tbl_Contact> Tbl_Contact { get; set; }
     }
 }

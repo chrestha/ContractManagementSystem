@@ -22,7 +22,9 @@ namespace ContractManagementSystem.Data.Database
         public string Email { get; set; }
         public string PhoneNo { get; set; }
         public string Department { get; set; }
+        public int CompanyId { get; set; }
     
+        public virtual Tbl_Company Tbl_Company { get; set; }
         public virtual Tbl_Title Tbl_Title { get; set; }
     }
 }

@@ -27,6 +27,7 @@
           <Property Name="Email" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="PhoneNo" Type="nchar" MaxLength="20" Nullable="false" />
           <Property Name="Department" Type="varchar" MaxLength="100" />
+          <Property Name="CompanyId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Tbl_Title">
           <Key>
@@ -35,6 +36,18 @@
           <Property Name="ID" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Title" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <Association Name="FK_Tbl_Contact_Tbl_Company">
+          <End Role="Tbl_Company" Type="Self.Tbl_Company" Multiplicity="1" />
+          <End Role="Tbl_Contact" Type="Self.Tbl_Contact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Company">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Tbl_Contact">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Tbl_Contact_Tbl_Title">
           <End Role="Tbl_Title" Type="Self.Tbl_Title" Multiplicity="1" />
           <End Role="Tbl_Contact" Type="Self.Tbl_Contact" Multiplicity="*" />
@@ -74,6 +87,10 @@
           <EntitySet Name="Tbl_Company" EntityType="Self.Tbl_Company" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Contact" EntityType="Self.Tbl_Contact" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Title" EntityType="Self.Tbl_Title" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Tbl_Contact_Tbl_Company" Association="Self.FK_Tbl_Contact_Tbl_Company">
+            <End Role="Tbl_Company" EntitySet="Tbl_Company" />
+            <End Role="Tbl_Contact" EntitySet="Tbl_Contact" />
+          </AssociationSet>
           <AssociationSet Name="FK_Tbl_Contact_Tbl_Title" Association="Self.FK_Tbl_Contact_Tbl_Title">
             <End Role="Tbl_Title" EntitySet="Tbl_Title" />
             <End Role="Tbl_Contact" EntitySet="Tbl_Contact" />
@@ -93,6 +110,7 @@
           <Property Name="CompanyABN_CAN" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
           <Property Name="Description" Type="String" MaxLength="800" FixedLength="false" Unicode="false" />
           <Property Name="URL" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Tbl_Contact" Relationship="Self.FK_Tbl_Contact_Tbl_Company" FromRole="Tbl_Company" ToRole="Tbl_Contact" />
         </EntityType>
         <EntityType Name="Tbl_Contact">
           <Key>
@@ -106,6 +124,8 @@
           <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="PhoneNo" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
           <Property Name="Department" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CompanyId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Tbl_Company" Relationship="Self.FK_Tbl_Contact_Tbl_Company" FromRole="Tbl_Contact" ToRole="Tbl_Company" />
           <NavigationProperty Name="Tbl_Title" Relationship="Self.FK_Tbl_Contact_Tbl_Title" FromRole="Tbl_Contact" ToRole="Tbl_Title" />
         </EntityType>
         <EntityType Name="Tbl_Title">
@@ -116,6 +136,18 @@
           <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Tbl_Contact" Relationship="Self.FK_Tbl_Contact_Tbl_Title" FromRole="Tbl_Title" ToRole="Tbl_Contact" />
         </EntityType>
+        <Association Name="FK_Tbl_Contact_Tbl_Company">
+          <End Role="Tbl_Company" Type="Self.Tbl_Company" Multiplicity="1" />
+          <End Role="Tbl_Contact" Type="Self.Tbl_Contact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Company">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Tbl_Contact">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Tbl_Contact_Tbl_Title">
           <End Role="Tbl_Title" Type="Self.Tbl_Title" Multiplicity="1" />
           <End Role="Tbl_Contact" Type="Self.Tbl_Contact" Multiplicity="*" />
@@ -128,10 +160,14 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="CMSDbEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="CMS_DbEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Tbl_Company" EntityType="Self.Tbl_Company" />
           <EntitySet Name="Tbl_Contact" EntityType="Self.Tbl_Contact" />
           <EntitySet Name="Tbl_Title" EntityType="Self.Tbl_Title" />
+          <AssociationSet Name="FK_Tbl_Contact_Tbl_Company" Association="Self.FK_Tbl_Contact_Tbl_Company">
+            <End Role="Tbl_Company" EntitySet="Tbl_Company" />
+            <End Role="Tbl_Contact" EntitySet="Tbl_Contact" />
+          </AssociationSet>
           <AssociationSet Name="FK_Tbl_Contact_Tbl_Title" Association="Self.FK_Tbl_Contact_Tbl_Title">
             <End Role="Tbl_Title" EntitySet="Tbl_Title" />
             <End Role="Tbl_Contact" EntitySet="Tbl_Contact" />
@@ -139,7 +175,7 @@
           <FunctionImport Name="UserSP_DeleteCompany">
             <Parameter Name="ID" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="UserSP_GetCompany">
+          <FunctionImport Name="UserSP_GetCompany" EntitySet="Tbl_Company" ReturnType="Collection(CMSDbModel.Tbl_Company)">
             <Parameter Name="SearchValue" Mode="In" Type="String" />
             <Parameter Name="PageNo" Mode="In" Type="Int32" />
             <Parameter Name="PageSize" Mode="In" Type="Int32" />
@@ -165,7 +201,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="CMSDbModelStoreContainer" CdmEntityContainer="CMSDbEntities">
+        <EntityContainerMapping StorageEntityContainer="CMSDbModelStoreContainer" CdmEntityContainer="CMS_DbEntities">
           <EntitySetMapping Name="Tbl_Company">
             <EntityTypeMapping TypeName="CMSDbModel.Tbl_Company">
               <MappingFragment StoreEntitySet="Tbl_Company">
@@ -188,6 +224,7 @@
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="PhoneNo" ColumnName="PhoneNo" />
                 <ScalarProperty Name="Department" ColumnName="Department" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
