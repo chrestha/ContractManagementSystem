@@ -1,0 +1,229 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="CMSDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Tbl_Company">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="CompanyABN_CAN" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="800" />
+          <Property Name="URL" Type="varchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tbl_Contact">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="TitleId" Type="tinyint" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="ContractType" Type="bit" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="PhoneNo" Type="nchar" MaxLength="20" Nullable="false" />
+          <Property Name="Department" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Tbl_Title">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Tbl_Contact_Tbl_Title">
+          <End Role="Tbl_Title" Type="Self.Tbl_Title" Multiplicity="1" />
+          <End Role="Tbl_Contact" Type="Self.Tbl_Contact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Title">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Tbl_Contact">
+              <PropertyRef Name="TitleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="UserSP_DeleteCompany" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="UserSP_GetCompany" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="SearchValue" Type="nvarchar" Mode="In" />
+          <Parameter Name="PageNo" Type="int" Mode="In" />
+          <Parameter Name="PageSize" Type="int" Mode="In" />
+          <Parameter Name="SortColumn" Type="nvarchar" Mode="In" />
+          <Parameter Name="SortOrder" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="UserSP_InsertCompany" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Name" Type="varchar" Mode="In" />
+          <Parameter Name="CompanyABN_CAN" Type="nchar" Mode="In" />
+          <Parameter Name="Description" Type="varchar" Mode="In" />
+          <Parameter Name="URL" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="UserSP_UpdateCompany" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID" Type="int" Mode="In" />
+          <Parameter Name="Name" Type="varchar" Mode="In" />
+          <Parameter Name="CompanyABN_CAN" Type="nchar" Mode="In" />
+          <Parameter Name="Description" Type="varchar" Mode="In" />
+          <Parameter Name="URL" Type="varchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="CMSDbModelStoreContainer">
+          <EntitySet Name="Tbl_Company" EntityType="Self.Tbl_Company" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_Contact" EntityType="Self.Tbl_Contact" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_Title" EntityType="Self.Tbl_Title" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Tbl_Contact_Tbl_Title" Association="Self.FK_Tbl_Contact_Tbl_Title">
+            <End Role="Tbl_Title" EntitySet="Tbl_Title" />
+            <End Role="Tbl_Contact" EntitySet="Tbl_Contact" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CMSDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Tbl_Company">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CompanyABN_CAN" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="800" FixedLength="false" Unicode="false" />
+          <Property Name="URL" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tbl_Contact">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="TitleId" Type="Byte" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ContractType" Type="Boolean" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PhoneNo" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Department" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Tbl_Title" Relationship="Self.FK_Tbl_Contact_Tbl_Title" FromRole="Tbl_Contact" ToRole="Tbl_Title" />
+        </EntityType>
+        <EntityType Name="Tbl_Title">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Tbl_Contact" Relationship="Self.FK_Tbl_Contact_Tbl_Title" FromRole="Tbl_Title" ToRole="Tbl_Contact" />
+        </EntityType>
+        <Association Name="FK_Tbl_Contact_Tbl_Title">
+          <End Role="Tbl_Title" Type="Self.Tbl_Title" Multiplicity="1" />
+          <End Role="Tbl_Contact" Type="Self.Tbl_Contact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Title">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Tbl_Contact">
+              <PropertyRef Name="TitleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CMSDbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Tbl_Company" EntityType="Self.Tbl_Company" />
+          <EntitySet Name="Tbl_Contact" EntityType="Self.Tbl_Contact" />
+          <EntitySet Name="Tbl_Title" EntityType="Self.Tbl_Title" />
+          <AssociationSet Name="FK_Tbl_Contact_Tbl_Title" Association="Self.FK_Tbl_Contact_Tbl_Title">
+            <End Role="Tbl_Title" EntitySet="Tbl_Title" />
+            <End Role="Tbl_Contact" EntitySet="Tbl_Contact" />
+          </AssociationSet>
+          <FunctionImport Name="UserSP_DeleteCompany">
+            <Parameter Name="ID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="UserSP_GetCompany">
+            <Parameter Name="SearchValue" Mode="In" Type="String" />
+            <Parameter Name="PageNo" Mode="In" Type="Int32" />
+            <Parameter Name="PageSize" Mode="In" Type="Int32" />
+            <Parameter Name="SortColumn" Mode="In" Type="String" />
+            <Parameter Name="SortOrder" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="UserSP_InsertCompany" ReturnType="Collection(Decimal)">
+            <Parameter Name="Name" Mode="In" Type="String" />
+            <Parameter Name="CompanyABN_CAN" Mode="In" Type="String" />
+            <Parameter Name="Description" Mode="In" Type="String" />
+            <Parameter Name="URL" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="UserSP_UpdateCompany">
+            <Parameter Name="ID" Mode="In" Type="Int32" />
+            <Parameter Name="Name" Mode="In" Type="String" />
+            <Parameter Name="CompanyABN_CAN" Mode="In" Type="String" />
+            <Parameter Name="Description" Mode="In" Type="String" />
+            <Parameter Name="URL" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CMSDbModelStoreContainer" CdmEntityContainer="CMSDbEntities">
+          <EntitySetMapping Name="Tbl_Company">
+            <EntityTypeMapping TypeName="CMSDbModel.Tbl_Company">
+              <MappingFragment StoreEntitySet="Tbl_Company">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="CompanyABN_CAN" ColumnName="CompanyABN_CAN" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="URL" ColumnName="URL" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_Contact">
+            <EntityTypeMapping TypeName="CMSDbModel.Tbl_Contact">
+              <MappingFragment StoreEntitySet="Tbl_Contact">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="TitleId" ColumnName="TitleId" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="ContractType" ColumnName="ContractType" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="PhoneNo" ColumnName="PhoneNo" />
+                <ScalarProperty Name="Department" ColumnName="Department" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_Title">
+            <EntityTypeMapping TypeName="CMSDbModel.Tbl_Title">
+              <MappingFragment StoreEntitySet="Tbl_Title">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="UserSP_DeleteCompany" FunctionName="CMSDbModel.Store.UserSP_DeleteCompany" />
+          <FunctionImportMapping FunctionImportName="UserSP_GetCompany" FunctionName="CMSDbModel.Store.UserSP_GetCompany" />
+          <FunctionImportMapping FunctionImportName="UserSP_InsertCompany" FunctionName="CMSDbModel.Store.UserSP_InsertCompany" />
+          <FunctionImportMapping FunctionImportName="UserSP_UpdateCompany" FunctionName="CMSDbModel.Store.UserSP_UpdateCompany" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
