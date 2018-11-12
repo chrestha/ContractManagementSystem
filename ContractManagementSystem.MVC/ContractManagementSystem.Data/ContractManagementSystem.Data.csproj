@@ -54,10 +54,24 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CMSDb.Context.tt</DependentUpon>
     </Compile>
+    <Compile Include="Database\CMSDb.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CMSDb.tt</DependentUpon>
+    </Compile>
     <Compile Include="Database\CMSDb.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>CMSDb.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Database\Tbl_Company.cs">
+      <DependentUpon>CMSDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\Tbl_Contact.cs">
+      <DependentUpon>CMSDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\Tbl_Title.cs">
+      <DependentUpon>CMSDb.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -78,6 +92,12 @@
     <Content Include="Database\CMSDb.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>CMSDb.Context.cs</LastGenOutput>
+      <DependentUpon>CMSDb.edmx</DependentUpon>
+    </Content>
+    <Content Include="Database\CMSDb.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>CMSDb.edmx</DependentUpon>
+      <LastGenOutput>CMSDb.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <ItemGroup>
