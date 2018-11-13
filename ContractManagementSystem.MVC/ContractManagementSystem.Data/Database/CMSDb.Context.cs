@@ -128,5 +128,31 @@ namespace ContractManagementSystem.Data.Database
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UserSP_UpdateCompany", iDParameter, nameParameter, companyABN_CANParameter, descriptionParameter, uRLParameter);
         }
+    
+        public virtual ObjectResult<Tbl_Company> UserSP_GetCompanyByName_URL(string searchNameValue, string searchUrlValue)
+        {
+            var searchNameValueParameter = searchNameValue != null ?
+                new ObjectParameter("SearchNameValue", searchNameValue) :
+                new ObjectParameter("SearchNameValue", typeof(string));
+    
+            var searchUrlValueParameter = searchUrlValue != null ?
+                new ObjectParameter("SearchUrlValue", searchUrlValue) :
+                new ObjectParameter("SearchUrlValue", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Tbl_Company>("UserSP_GetCompanyByName_URL", searchNameValueParameter, searchUrlValueParameter);
+        }
+    
+        public virtual ObjectResult<Tbl_Company> UserSP_GetCompanyByName_URL(string searchNameValue, string searchUrlValue, MergeOption mergeOption)
+        {
+            var searchNameValueParameter = searchNameValue != null ?
+                new ObjectParameter("SearchNameValue", searchNameValue) :
+                new ObjectParameter("SearchNameValue", typeof(string));
+    
+            var searchUrlValueParameter = searchUrlValue != null ?
+                new ObjectParameter("SearchUrlValue", searchUrlValue) :
+                new ObjectParameter("SearchUrlValue", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Tbl_Company>("UserSP_GetCompanyByName_URL", mergeOption, searchNameValueParameter, searchUrlValueParameter);
+        }
     }
 }

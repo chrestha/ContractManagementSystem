@@ -79,6 +79,12 @@
     <Compile Include="Database\UserSP_CompanyById_Result.cs">
       <DependentUpon>CMSDb.tt</DependentUpon>
     </Compile>
+    <Compile Include="Database\UserSP_GetCompanyByName_Result.cs">
+      <DependentUpon>CMSDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\UserSP_GetCompanyByName_URL_Result.cs">
+      <DependentUpon>CMSDb.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -241,3 +241,26 @@ GO
 --   EXECUTE (@sql)
 --   SET @totalrow = (SELECT COUNT(*) FROM [dbo].[Tbl_Company])
 --END
+
+
+create PROCEDURE [dbo].[UserSP_GetCompanyByName]
+(
+	@SearchNameValue NVARCHAR(200) = NULL,
+	@SearchUrlValue NVARCHAR(50) = NULL
+	
+)
+ AS BEGIN
+ SET NOCOUNT ON;
+
+ SET @SearchNameValue = LTRIM(RTRIM(@SearchNameValue))
+  SET @SearchUrlValue = LTRIM(RTRIM(@SearchUrlValue))
+  
+    SELECT [ID],[Name],[CompanyABN_CAN],[Description],[URL] from [dbo].[Tbl_Company] 
+	WHERE (@SearchNameValue IS NULL OR [Name] LIKE '%' + @SearchNameValue + '%')  and (@SearchUrlValue IS NULL OR [URL] LIKE '%' + @SearchUrlValue + '%')
+	 	    ORDER BY [Name] ASC
+   	  
+      
+
+
+   END
+GO

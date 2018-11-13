@@ -4,188 +4,131 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="container-fluid">
-    <div class="row bg-title">
-        <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-            <h4 class="page-title">Student</h4>
-        </div>
-        <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
-            <a href="@Url.Action("Create")" target="_blank" class="btn btn-danger pull-right m-l-20 hidden-xs hidden-sm waves-effect waves-light">Create New</a>
 
-        </div>
-        <!-- /.col-lg-12 -->
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+ 
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a href="#">Home Page</a>
+    </li>
+    <li class="breadcrumb-item active">Overview</li>
+</ol>
+
+
+<!-- DataTables Example -->
+<div class="card mb-3">
+    <div class="card-header">
+        <i class="fa fa-table"></i>
+        Company List
+        @Html.ActionLink("new", "Create", null, new { @class = "btn btn-info pull-right" ,@style=""})
+       
     </div>
-    <div class="row">
-        @using (Html.BeginForm("Filter", "Student", FormMethod.Post, new { @class = "" }))
-        {
-            @*@Html.HiddenFor(x => x.Pager.CurrentPage, new { @id = "currPageNo" })
-        @Html.HiddenFor(x => x.Pager.PageSize, new { @id = "recordsPerPage" })
-        @Html.HiddenFor(x => x.Pager.TotalPages)
-        @Html.HiddenFor(x => x.Pager.TotalRecords)*@
-        <div class="col-sm-12">
-            <div class="white-box">
-                <h3 class="box-title"><b>@Resources.ViewResource.Filter</b></h3>
+    <div>
+        <div class="table-responsive">
+            
 
-                <div class="row">
-                    <div class="form-group col-md-4">
-                        @Html.Label("Name", new { @class = "control-label col-md-2" })
-                        <div class="">
-                            @Html.TextBox("Name", new { @class = "form-control", @placeholder = Resources.ViewResource.Name })
-                        </div>
-                    </div> 
-                    <div class="col-md-2 col-md-offset-10">
-                        <button type="submit" class="btn btn-block btn-primary">@Resources.ViewResource.Search</button>
-                    </div>
+                <div class="col-sm-12 col-md-8">
+                    <div class="dataTables_filter ">
+                        <label>Search</label>
+                        @using (Ajax.BeginForm("_Filter", "Company", new AjaxOptions
+                        {//GetPatients is name of method in PatientController
+                            InsertionMode = InsertionMode.Replace, //target element(#patientList) will be replaced
+                            UpdateTargetId = "Div_List",
+                            LoadingElementId = "loader" // div with .gif loader - that is shown when data are loading
+                        },new { @class= "form-inline" }))
+                        {
+                            string Name = "";
+                            string Url = "";
+                            string CustomerID = "";
 
-                </div>
-            </div>
-        </div>
-    }
-    </div>
-
-    <div class="row">
-        <div class="col-md-12">
-            <div class="panel">
-                <div class="panel-heading">Student List</div>
-                <div class="table-responsive">
-                    <table class="table table-hover manage-u-table">
-                        <thead>
-                            <tr>
-                                <th>
-                                    @Resources.ViewResource.SNo
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.Name)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.CompanyABN_CAN)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.Description)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.URL)
-                                </th>
-                                <th width="300">MANAGE</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @{int counter = 1;}
-                            @foreach (var item in Model)
-                            {
-                                <tr>
-                                    <td>
-                                        @counter
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Name)
-                                    </td>
-
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.CompanyABN_CAN)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Description)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.URL)
-                                    </td>
-                                    <td>
-                                        <a href="@Url.Action("Edit", new { id=item.ID})" class=" fa fa-pencil " title="update"></a> &nbsp;&nbsp;
-                                        <a href="@Url.Action("Details", new { id=item.ID})" class=" fa fa-info " title="update"></a> &nbsp;&nbsp;
-                                        <a href="@Url.Action("Delete", new { id=item.ID})" class="DeleteLink fa fa-trash text-danger " title="delete"></a>
-                                    </td>
-                                </tr>
-                                counter++;
-                            }
-                        </tbody>
-                    </table>
-                    <div>
-                        @*@{
-                            Html.RenderPartial("_Pager", Model.Pager);
-                        }*@
+                            @Html.TextBoxFor(model => Name, new { @class = "form-control  pull-left", @autocomplete = "autocomplete", @id = "Name_Id", @placeholder = "Name" })
+                            @Html.HiddenFor(model => CustomerID)
+                            @Html.TextBoxFor(model => Url, new { @class = "form-control  pull-left", @autocomplete = "autocomplete", @id = "Name_Id", @placeholder = "URL" })
+                            
+                            <button class="btn fa fa-search pull-left" type="submit"  style="margin-left:15px"/> 
+                        }
                     </div>
                 </div>
+        
+            <hr />
+            <div class="col-sm-12" id="Div_List">
+                <div id="loader" class=" aletr text-info" style="display:none">
+                    Loading...
+                </div>
+
+                @Html.Partial("_Filter")
+
             </div>
+
+
+            @*<div class="col-sm-12 col-md-5"><div class="dataTables_info" id="dataTable_info" role="status" aria-live="polite">Showing 1 to 10 of 57 entries</div></div><div class="col-sm-12 col-md-7"><div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate"><ul class="pagination"><li class="paginate_button page-item previous disabled" id="dataTable_previous"><a href="#" aria-controls="dataTable" data-dt-idx="0" tabindex="0" class="page-link">Previous</a></li><li class="paginate_button page-item active"><a href="#" aria-controls="dataTable" data-dt-idx="1" tabindex="0" class="page-link">1</a></li><li class="paginate_button page-item "><a href="#" aria-controls="dataTable" data-dt-idx="2" tabindex="0" class="page-link">2</a></li><li class="paginate_button page-item "><a href="#" aria-controls="dataTable" data-dt-idx="3" tabindex="0" class="page-link">3</a></li><li class="paginate_button page-item "><a href="#" aria-controls="dataTable" data-dt-idx="4" tabindex="0" class="page-link">4</a></li><li class="paginate_button page-item "><a href="#" aria-controls="dataTable" data-dt-idx="5" tabindex="0" class="page-link">5</a></li><li class="paginate_button page-item "><a href="#" aria-controls="dataTable" data-dt-idx="6" tabindex="0" class="page-link">6</a></li><li class="paginate_button page-item next" id="dataTable_next"><a href="#" aria-controls="dataTable" data-dt-idx="7" tabindex="0" class="page-link">Next</a></li></ul></div></div>*@
+
         </div>
     </div>
 </div>
 
-@*<h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CompanyABN_CAN)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.URL)
-        </th>
-        <th></th>
-    </tr>
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CompanyABN_CAN)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.URL)
-            </td>
-            <td>
 
-                <a href="@Url.Action("Edit", new { id=item.ID})" class=" fa fa-pencil " title="update"></a> &nbsp;&nbsp;
-                <a href="@Url.Action("Details", new { id=item.ID})" class=" fa fa-info " title="update"></a> &nbsp;&nbsp;
 
-                <a href="@Url.Action("Delete", new { id=item.ID})" class="DeleteLink fa fa-trash text-danger " title="delete"></a>
 
-            </td>
-        </tr>
-    }
 
-</table>*@
-@section Scripts{
  
-    <script>
-        $(document).on("click", ".DeleteLink", function (e) {
-            var link = $(this).attr("href"); // "get" the intended link in a var
-            e.preventDefault();
 
-            bootbox.confirm({
-                message: "Do you want to Delete This?",
-                buttons: {
-                    confirm: {
-                        label: 'confirm',
-                        className: 'btn-danger'
-                    },
-                    cancel: {
-                        label: 'cancel',
-                        className: 'btn-default'
-                    }
-                },
-                callback: function (result) {
-                    if (result) {
-                        document.location.href = link;
-                    }
+@section Scripts{
+
+    <script>
+        $(document).ready(function () {
+            $("#Name_Id").autocomplete({
+
+                source: function (request, response) {
+                    $.ajax({
+                        /**/
+                        url: '@Url.Action("GetCompanyName")',
+        /**/
+        datatype: "json",
+        data: {
+            term: request.term
+        },
+        success: function (data) {
+            response($.map(data, function (val, item) {
+                return {
+                    label: val.Name,
+                    value: val.Name,
+                    customerId: val.ID
                 }
-            });
-        });
-         
+            }))
+        }
+    })
+},
+select: function (event, ui) {
+    $("#CustomerID").val(ui.item.customerId);
+}
+});
+});
+$(document).on("click", ".DeleteLink", function (e) {
+var link = $(this).attr("href"); // "get" the intended link in a var
+e.preventDefault();
+
+bootbox.confirm({
+message: "Do you want to Delete This?",
+buttons: {
+    confirm: {
+        label: 'confirm',
+        className: 'btn-danger'
+    },
+    cancel: {
+        label: 'cancel',
+        className: 'btn-default'
+    }
+},
+callback: function (result) {
+    if (result) {
+        document.location.href = link;
+    }
+}
+});
+});
+
     </script>
 }

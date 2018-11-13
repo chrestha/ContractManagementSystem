@@ -21,10 +21,24 @@ namespace ContractManagementSystem.MVC.Controllers
        
         // GET: Company
         public ActionResult Index()
-        {
-            int maxRows = 0;
-            List<CompanyVM> list = _service.GetList("",1,10, out maxRows);
+        {            
+            List<CompanyVM> list = _service.GetFilteredList("","");
             return View(list);
+        }
+        public ActionResult _Filter(string Name, string Url)
+        {
+             
+            List<CompanyVM> list = _service.GetFilteredList(Name, Url);
+            return PartialView("_Filter", list);
+        }
+        public JsonResult GetCompanyName(string term = "")
+        {
+            var objDatalist = _service.GetFilteredList().Where(c => !string.IsNullOrEmpty(c.Name))
+                            .Where(c => c.Name.ToUpper()
+                            .Contains(term.ToUpper()))
+                            .Select(c => new { Name = c.Name, ID = c.ID })
+                            .Distinct().ToList();
+           return Json(objDatalist, JsonRequestBehavior.AllowGet);
         }
 
         // GET: Company/Details/5

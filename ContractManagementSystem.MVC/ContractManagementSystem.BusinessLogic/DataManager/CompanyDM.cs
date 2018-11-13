@@ -35,6 +35,27 @@ namespace ContractManagementSystem.BusinessLogic.DataManager
             }
             return list;
         }
+        public List<CompanyVM> GetFilteredList(string searchName="",string searchUrl="")
+        {
+            List<CompanyVM> list = new List<CompanyVM>();
+            try
+            {
+                using (CMS_DbEntities db = new CMS_DbEntities())
+                {
+                    List<Tbl_Company> companies = new List<Tbl_Company>();
+                    companies = db.UserSP_GetCompanyByName_URL(searchName, searchUrl).ToList();                    
+                    foreach (Tbl_Company company in companies)
+                    {
+                        list.Add(converter.ConvertToModel(company));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return list;
+        }
         public int Insert(CompanyVM companyVm)
         {
             int result = 0;

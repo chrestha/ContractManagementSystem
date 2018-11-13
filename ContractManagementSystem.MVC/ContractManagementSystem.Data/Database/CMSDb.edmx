@@ -73,6 +73,10 @@
           <Parameter Name="SortColumn" Type="nvarchar" Mode="In" />
           <Parameter Name="SortOrder" Type="nvarchar" Mode="In" />
         </Function>
+        <Function Name="UserSP_GetCompanyByName_URL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="SearchNameValue" Type="nvarchar" Mode="In" />
+          <Parameter Name="SearchUrlValue" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="UserSP_InsertCompany" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Name" Type="varchar" Mode="In" />
           <Parameter Name="CompanyABN_CAN" Type="nchar" Mode="In" />
@@ -160,6 +164,10 @@
             <Parameter Name="Description" Mode="In" Type="String" />
             <Parameter Name="URL" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="UserSP_GetCompanyByName_URL" EntitySet="Tbl_Company" ReturnType="Collection(CMSDbModel.Tbl_Company)">
+            <Parameter Name="SearchNameValue" Mode="In" Type="String" />
+            <Parameter Name="SearchUrlValue" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="Tbl_Contact">
           <Key>
@@ -215,6 +223,20 @@
           <Property Type="String" Name="CompanyABN_CAN" Nullable="true" MaxLength="10" />
           <Property Type="String" Name="Description" Nullable="true" MaxLength="800" />
           <Property Type="String" Name="URL" Nullable="true" MaxLength="200" />
+        </ComplexType>
+        <ComplexType Name="UserSP_GetCompanyByName_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="200" />
+          <Property Type="String" Name="CompanyABN_CAN" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="Description" Nullable="true" MaxLength="800" />
+          <Property Type="String" Name="URL" Nullable="false" MaxLength="200" />
+        </ComplexType>
+        <ComplexType Name="UserSP_GetCompanyByName_URL_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="200" />
+          <Property Type="String" Name="CompanyABN_CAN" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="Description" Nullable="true" MaxLength="800" />
+          <Property Type="String" Name="URL" Nullable="false" MaxLength="200" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -294,6 +316,8 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="UserSP_UpdateCompany" FunctionName="CMSDbModel.Store.UserSP_UpdateCompany" />
+          <FunctionImportMapping FunctionImportName="UserSP_GetCompanyByName_URL" FunctionName="CMSDbModel.Store.UserSP_GetCompanyByName_URL">
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

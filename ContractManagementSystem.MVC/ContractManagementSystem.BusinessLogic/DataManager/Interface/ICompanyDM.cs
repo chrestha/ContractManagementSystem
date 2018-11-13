@@ -14,5 +14,6 @@ namespace ContractManagementSystem.BusinessLogic.DataManager.Interface
         int Update(CompanyVM companyVm);
         int Delete(object id);
         CompanyVM GetById(object id);
+        List<CompanyVM> GetFilteredList(string searchName="", string searchUrl="");
     }
 }
