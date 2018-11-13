@@ -11,9 +11,10 @@ namespace ContractManagementSystem.Data.Database
 {
     using System;
     
-    public partial class UserSP_GetCompanyByName_Result
+    public partial class UserSP_GetCompany_Result
     {
-        public int ID { get; set; }
+        public Nullable<int> MaxRows { get; set; }
+        public Nullable<int> ID { get; set; }
         public string Name { get; set; }
         public string CompanyABN_CAN { get; set; }
         public string Description { get; set; }

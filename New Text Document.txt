@@ -1,0 +1,1 @@
+Hi, This is simple Web application. It help manage contact details

@@ -79,10 +79,10 @@
     <Compile Include="Database\UserSP_CompanyById_Result.cs">
       <DependentUpon>CMSDb.tt</DependentUpon>
     </Compile>
-    <Compile Include="Database\UserSP_GetCompanyByName_Result.cs">
+    <Compile Include="Database\UserSP_GetCompanyByName_URL_Result.cs">
       <DependentUpon>CMSDb.tt</DependentUpon>
     </Compile>
-    <Compile Include="Database\UserSP_GetCompanyByName_URL_Result.cs">
+    <Compile Include="Database\UserSP_GetCompany_Result.cs">
       <DependentUpon>CMSDb.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

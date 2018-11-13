@@ -261,7 +261,7 @@ create PROCEDURE [dbo].[UserSP_GetCompanyByName_URL]
  SET @SearchNameValue = LTRIM(RTRIM(@SearchNameValue))
   SET @SearchUrlValue = LTRIM(RTRIM(@SearchUrlValue))
   
-    SELECT [ID],[Name],[CompanyABN_CAN],[Description],[URL] from [dbo].[Tbl_Company] 
+    SELECT [ID],[Name],[CompanyABN_CAN],[Description],[URL],[deleted] from [dbo].[Tbl_Company] 
 	WHERE ([Deleted]=0)And(@SearchNameValue IS NULL OR [Name] LIKE '%' + @SearchNameValue + '%')  and (@SearchUrlValue IS NULL OR [URL] LIKE '%' + @SearchUrlValue + '%')
 	 	    ORDER BY [Name] ASC  	  
       

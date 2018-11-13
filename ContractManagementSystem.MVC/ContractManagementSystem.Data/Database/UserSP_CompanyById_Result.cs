@@ -18,5 +18,6 @@ namespace ContractManagementSystem.Data.Database
         public string CompanyABN_CAN { get; set; }
         public string Description { get; set; }
         public string URL { get; set; }
+        public bool Deleted { get; set; }
     }
 }

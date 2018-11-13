@@ -28,38 +28,8 @@ namespace ContractManagementSystem.Data.Database
         }
     
         public virtual DbSet<Tbl_Company> Tbl_Company { get; set; }
-        public virtual DbSet<Tbl_Title> Tbl_Title { get; set; }
         public virtual DbSet<Tbl_Contact> Tbl_Contact { get; set; }
-    
-        public virtual int UserSP_DeleteCompany(Nullable<int> iD)
-        {
-            var iDParameter = iD.HasValue ?
-                new ObjectParameter("ID", iD) :
-                new ObjectParameter("ID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UserSP_DeleteCompany", iDParameter);
-        }
-    
-        public virtual ObjectResult<Nullable<decimal>> UserSP_InsertCompany(string name, string companyABN_CAN, string description, string uRL)
-        {
-            var nameParameter = name != null ?
-                new ObjectParameter("Name", name) :
-                new ObjectParameter("Name", typeof(string));
-    
-            var companyABN_CANParameter = companyABN_CAN != null ?
-                new ObjectParameter("CompanyABN_CAN", companyABN_CAN) :
-                new ObjectParameter("CompanyABN_CAN", typeof(string));
-    
-            var descriptionParameter = description != null ?
-                new ObjectParameter("Description", description) :
-                new ObjectParameter("Description", typeof(string));
-    
-            var uRLParameter = uRL != null ?
-                new ObjectParameter("URL", uRL) :
-                new ObjectParameter("URL", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("UserSP_InsertCompany", nameParameter, companyABN_CANParameter, descriptionParameter, uRLParameter);
-        }
+        public virtual DbSet<Tbl_Title> Tbl_Title { get; set; }
     
         public virtual ObjectResult<Tbl_Company> UserSP_CompanyById(Nullable<int> iD)
         {
@@ -77,6 +47,15 @@ namespace ContractManagementSystem.Data.Database
                 new ObjectParameter("ID", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Tbl_Company>("UserSP_CompanyById", mergeOption, iDParameter);
+        }
+    
+        public virtual int UserSP_DeleteCompany(Nullable<int> iD)
+        {
+            var iDParameter = iD.HasValue ?
+                new ObjectParameter("ID", iD) :
+                new ObjectParameter("ID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UserSP_DeleteCompany", iDParameter);
         }
     
         public virtual ObjectResult<SpCompany> UserSP_GetCompany(string searchValue, Nullable<int> pageNo, Nullable<int> pageSize, string sortColumn, string sortOrder)
@@ -104,31 +83,6 @@ namespace ContractManagementSystem.Data.Database
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SpCompany>("UserSP_GetCompany", searchValueParameter, pageNoParameter, pageSizeParameter, sortColumnParameter, sortOrderParameter);
         }
     
-        public virtual int UserSP_UpdateCompany(Nullable<int> iD, string name, string companyABN_CAN, string description, string uRL)
-        {
-            var iDParameter = iD.HasValue ?
-                new ObjectParameter("ID", iD) :
-                new ObjectParameter("ID", typeof(int));
-    
-            var nameParameter = name != null ?
-                new ObjectParameter("Name", name) :
-                new ObjectParameter("Name", typeof(string));
-    
-            var companyABN_CANParameter = companyABN_CAN != null ?
-                new ObjectParameter("CompanyABN_CAN", companyABN_CAN) :
-                new ObjectParameter("CompanyABN_CAN", typeof(string));
-    
-            var descriptionParameter = description != null ?
-                new ObjectParameter("Description", description) :
-                new ObjectParameter("Description", typeof(string));
-    
-            var uRLParameter = uRL != null ?
-                new ObjectParameter("URL", uRL) :
-                new ObjectParameter("URL", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UserSP_UpdateCompany", iDParameter, nameParameter, companyABN_CANParameter, descriptionParameter, uRLParameter);
-        }
-    
         public virtual ObjectResult<Tbl_Company> UserSP_GetCompanyByName_URL(string searchNameValue, string searchUrlValue)
         {
             var searchNameValueParameter = searchNameValue != null ?
@@ -153,6 +107,52 @@ namespace ContractManagementSystem.Data.Database
                 new ObjectParameter("SearchUrlValue", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Tbl_Company>("UserSP_GetCompanyByName_URL", mergeOption, searchNameValueParameter, searchUrlValueParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<decimal>> UserSP_InsertCompany(string name, string companyABN_CAN, string description, string uRL)
+        {
+            var nameParameter = name != null ?
+                new ObjectParameter("Name", name) :
+                new ObjectParameter("Name", typeof(string));
+    
+            var companyABN_CANParameter = companyABN_CAN != null ?
+                new ObjectParameter("CompanyABN_CAN", companyABN_CAN) :
+                new ObjectParameter("CompanyABN_CAN", typeof(string));
+    
+            var descriptionParameter = description != null ?
+                new ObjectParameter("Description", description) :
+                new ObjectParameter("Description", typeof(string));
+    
+            var uRLParameter = uRL != null ?
+                new ObjectParameter("URL", uRL) :
+                new ObjectParameter("URL", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("UserSP_InsertCompany", nameParameter, companyABN_CANParameter, descriptionParameter, uRLParameter);
+        }
+    
+        public virtual int UserSP_UpdateCompany(Nullable<int> iD, string name, string companyABN_CAN, string description, string uRL)
+        {
+            var iDParameter = iD.HasValue ?
+                new ObjectParameter("ID", iD) :
+                new ObjectParameter("ID", typeof(int));
+    
+            var nameParameter = name != null ?
+                new ObjectParameter("Name", name) :
+                new ObjectParameter("Name", typeof(string));
+    
+            var companyABN_CANParameter = companyABN_CAN != null ?
+                new ObjectParameter("CompanyABN_CAN", companyABN_CAN) :
+                new ObjectParameter("CompanyABN_CAN", typeof(string));
+    
+            var descriptionParameter = description != null ?
+                new ObjectParameter("Description", description) :
+                new ObjectParameter("Description", typeof(string));
+    
+            var uRLParameter = uRL != null ?
+                new ObjectParameter("URL", uRL) :
+                new ObjectParameter("URL", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UserSP_UpdateCompany", iDParameter, nameParameter, companyABN_CANParameter, descriptionParameter, uRLParameter);
         }
     }
 }
