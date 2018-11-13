@@ -1,0 +1,148 @@
+﻿
+@model  ContractManagementSystem.BusinessLogic.Helper.SimpleMoldelFilter<ContractManagementSystem.BusinessLogic.ViewModel.ContactVM>
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+<script src="~/Scripts/CustomJs/Pager.js"></script>
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a href="#">Contact Page</a>
+    </li>
+    <li class="breadcrumb-item active">Contact List</li>
+</ol>
+<div class="card mb-3">
+    <div class="card-header">
+        <i class="fa fa-table"></i>
+        Contact List
+        @Html.ActionLink("new", "Create", null, new { @class = "btn btn-info pull-right ", @target = "_blank" })
+
+    </div>
+    <br />
+    @using (Html.BeginForm("Filter", "Contact", FormMethod.Post, new { @class = " form-inline col-md-12 mt-2", @id = "filterForm" }))
+    {
+        @Html.HiddenFor(x => x.Pager.CurrentPage, new { @id = "currPageNo" })
+        @Html.HiddenFor(x => x.Pager.PageSize, new { @id = "recordsPerPage" })
+        @Html.HiddenFor(x => x.Pager.TotalPages)
+        @Html.HiddenFor(x => x.Pager.TotalRecords)
+        @Html.Label("Name", new { @class = "mb-2 mr-sm-2" })
+        @Html.TextBoxFor(x => x.field1, new { @class = "form-control mb-2 mr-sm-2", @placeholder = Resources.ViewResource.Name })
+        @Html.Label("Department", new { @class = "mb-2 mr-sm-2" })
+        @Html.TextBoxFor(x => x.field2, new { @class = "form-control  mb-2 mr-sm-2", @placeholder = Resources.ViewResource.Name })
+        @Html.Label("ContractType", htmlAttributes: new { @class = "mb-2 mr-sm-2" })
+        @Html.DropDownListFor(x => x.field3,
+               EnumHelper.GetSelectList(typeof(ContractManagementSystem.BusinessLogic.Enum.ContractType)),
+               "Select Contract Type",
+               new { @class = "form-control mb-2 mr-sm-2" })
+
+        <div class="mb-2 mr-sm-2"> <button type="submit" class="btn btn-block btn-primary pull-right">@Resources.ViewResource.Search</button></div>
+    }
+
+    <div class="col-sm-12" id="Div_List">
+        @*<div id="loader" class=" aletr text-info" style="display:none">
+                Loading...
+            </div>
+
+            //@Html.Partial("_Filter")*@
+        <table class="table table-striped table-bordered" cellspacing="0">
+            <tr role="row">
+                <th class="sorting">
+                    @Resources.ViewResource.SNo
+                </th>
+                <th>
+                    @Resources.ViewResource.Department
+                </th>
+
+                <th>
+                    @Resources.ViewResource.ContractType
+                </th>
+                <th>
+                    @Resources.ViewResource.Actions
+                </th>
+            </tr>
+
+            @foreach (var item in Model.ListOfItemsToShow)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FullName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Department)
+                    </td>
+                    <td>
+                        @{ var data = (ContractManagementSystem.BusinessLogic.Enum.ContractType)item.ContractType;}
+                        @data
+                    </td>
+                    <td>
+
+
+                        @if (item.Status)
+                        {<a href="@Url.Action("Edit", new { id=item.ID})" class=" fa fa-pencil " title="update"></a> &nbsp; &nbsp;
+                            <a href="@Url.Action("Details", new { id=item.ID})" class=" fa fa-info " title="update"></a> &nbsp; &nbsp;
+
+                            <a href="@Url.Action("Delete", new { id=item.ID})" class="DeleteLink fa fa-trash text-danger " title="delete"></a><a href="@Url.Action("ChangeStatus", new { id=item.ID})" class="StatusLink fa fa-unlock text-info " title="Active"></a>}
+                        else
+                        { <a href="@Url.Action("ChangeStatus", new { id=item.ID})" class="StatusLink fa fa-lock text-danger " title="Deactive"></a>}
+
+
+                    </td>
+                </tr>
+            }
+
+        </table>
+        <div>
+            @{
+                Html.RenderPartial("_Pager", Model.Pager);
+            }
+        </div>
+    </div>
+</div>
+<script>
+    $(document).on("click", ".DeleteLink", function (e) {
+        var link = $(this).attr("href"); // "get" the intended link in a var
+        e.preventDefault();
+
+        bootbox.confirm({
+            message: "Do you want to Delete This?",
+            buttons: {
+                confirm: {
+                    label: 'confirm',
+                    className: 'btn-danger'
+                },
+                cancel: {
+                    label: 'cancel',
+                    className: 'btn-default'
+                }
+            },
+            callback: function (result) {
+                //page reload after delete
+                if (result) {
+                    document.location.href = link;
+                }
+            }
+        });
+    });
+
+    $(document).on("click", ".DeleteLink", function (e) {
+        var link = $(this).attr("href"); // "get" the intended link in a var
+        e.preventDefault();
+
+        bootbox.confirm({
+            message: "Do you want to Change Status?",
+            buttons: {
+                confirm: {
+                    label: 'confirm',
+                    className: 'btn-danger'
+                },
+                cancel: {
+                    label: 'cancel',
+                    className: 'btn-default'
+                }
+            },
+            callback: function (result) {
+                //page reload after delete
+                if (result) {
+                    document.location.href = link;
+                }
+            }
+        });
+    });
+</script>

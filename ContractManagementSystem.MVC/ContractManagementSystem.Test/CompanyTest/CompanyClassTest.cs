@@ -15,6 +15,7 @@ namespace ContractManagementSystem.Test.CompanyTest
 {
     public class CompanyClassTest
     {
+        //This Test Mock fake data in getbyId and test Controller Action  details
         [Fact]
         public void GetCompaniesFromDatabase()
         {
@@ -30,9 +31,9 @@ namespace ContractManagementSystem.Test.CompanyTest
             var model = Assert.IsAssignableFrom<CompanyVM>(
                 viewResult.ViewData.Model);
             Assert.Equal("Anish", model.Name);
-            Assert.NotNull(result);
-             
+            Assert.NotNull(result);            
           
         }
+        //Due to lack of time I am not able to add all test cases
     }
 }

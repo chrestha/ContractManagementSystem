@@ -14,12 +14,13 @@
           <Property Name="CompanyABN_CAN" Type="nchar" MaxLength="10" Nullable="false" />
           <Property Name="Description" Type="varchar" MaxLength="800" />
           <Property Name="URL" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Tbl_Contact">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TitleId" Type="tinyint" Nullable="false" />
           <Property Name="FirstName" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="LastName" Type="varchar" MaxLength="200" Nullable="false" />
@@ -28,6 +29,7 @@
           <Property Name="PhoneNo" Type="nchar" MaxLength="20" Nullable="false" />
           <Property Name="Department" Type="varchar" MaxLength="100" />
           <Property Name="CompanyId" Type="int" Nullable="false" />
+          <Property Name="Status" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Tbl_Title">
           <Key>
@@ -116,7 +118,8 @@
           <Property Name="CompanyABN_CAN" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
           <Property Name="Description" Type="String" MaxLength="800" FixedLength="false" Unicode="false" />
           <Property Name="URL" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Tbl_Contacts" Relationship="CMSDbModel.FK_Tbl_Contact_Tbl_Company" FromRole="Tbl_Company" ToRole="Tbl_Contact" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Tbl_Contact" Relationship="CMSDbModel.FK_Tbl_Contact_Tbl_Company" FromRole="Tbl_Company" ToRole="Tbl_Contact" />
         </EntityType>
         <EntityType Name="Tbl_Title">
           <Key>
@@ -138,15 +141,6 @@
             <Parameter Name="Description" Mode="In" Type="String" />
             <Parameter Name="URL" Mode="In" Type="String" />
           </FunctionImport>
-          <EntitySet Name="Tbl_Contact" EntityType="CMSDbModel.Tbl_Contact" />
-          <AssociationSet Name="FK_Tbl_Contact_Tbl_Company" Association="CMSDbModel.FK_Tbl_Contact_Tbl_Company">
-            <End Role="Tbl_Company" EntitySet="Tbl_Company" />
-            <End Role="Tbl_Contact" EntitySet="Tbl_Contact" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Tbl_Contact_Tbl_Title" Association="CMSDbModel.FK_Tbl_Contact_Tbl_Title">
-            <End Role="Tbl_Title" EntitySet="Tbl_Title" />
-            <End Role="Tbl_Contact" EntitySet="Tbl_Contact" />
-          </AssociationSet>
           <FunctionImport Name="UserSP_CompanyById" EntitySet="Tbl_Company" ReturnType="Collection(CMSDbModel.Tbl_Company)">
           <Parameter Name="ID" Mode="In" Type="Int32" />
           </FunctionImport>
@@ -168,47 +162,16 @@
             <Parameter Name="SearchNameValue" Mode="In" Type="String" />
             <Parameter Name="SearchUrlValue" Mode="In" Type="String" />
           </FunctionImport>
-        </EntityContainer>
-        <EntityType Name="Tbl_Contact">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" />
-          <Property Name="TitleId" Type="Byte" Nullable="false" />
-          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="LastName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="ContractType" Type="Byte" Nullable="false" />
-          <Property Name="Email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="PhoneNo" Type="String" Nullable="false" MaxLength="20" FixedLength="true" Unicode="true" />
-          <Property Name="Department" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="CompanyId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Tbl_Company" Relationship="CMSDbModel.FK_Tbl_Contact_Tbl_Company" FromRole="Tbl_Contact" ToRole="Tbl_Company" />
-          <NavigationProperty Name="Tbl_Title" Relationship="CMSDbModel.FK_Tbl_Contact_Tbl_Title" FromRole="Tbl_Contact" ToRole="Tbl_Title" />
-        </EntityType>
-        <Association Name="FK_Tbl_Contact_Tbl_Company">
-          <End Type="CMSDbModel.Tbl_Company" Role="Tbl_Company" Multiplicity="1" />
-          <End Type="CMSDbModel.Tbl_Contact" Role="Tbl_Contact" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tbl_Company">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Tbl_Contact">
-              <PropertyRef Name="CompanyId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Tbl_Contact_Tbl_Title">
-          <End Type="CMSDbModel.Tbl_Title" Role="Tbl_Title" Multiplicity="1" />
-          <End Type="CMSDbModel.Tbl_Contact" Role="Tbl_Contact" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tbl_Title">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Tbl_Contact">
-              <PropertyRef Name="TitleId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
+          <EntitySet Name="Tbl_Contact" EntityType="CMSDbModel.Tbl_Contact" />
+          <AssociationSet Name="FK_Tbl_Contact_Tbl_Company" Association="CMSDbModel.FK_Tbl_Contact_Tbl_Company">
+            <End Role="Tbl_Company" EntitySet="Tbl_Company" />
+            <End Role="Tbl_Contact" EntitySet="Tbl_Contact" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_Contact_Tbl_Title" Association="CMSDbModel.FK_Tbl_Contact_Tbl_Title">
+            <End Role="Tbl_Title" EntitySet="Tbl_Title" />
+            <End Role="Tbl_Contact" EntitySet="Tbl_Contact" />
+          </AssociationSet>
+          </EntityContainer>
         <ComplexType Name="UserSP_CompanyById_Result">
           <Property Type="Int32" Name="ID" Nullable="false" />
           <Property Type="String" Name="Name" Nullable="false" MaxLength="200" />
@@ -238,7 +201,48 @@
           <Property Type="String" Name="Description" Nullable="true" MaxLength="800" />
           <Property Type="String" Name="URL" Nullable="false" MaxLength="200" />
         </ComplexType>
-      </Schema>
+        <EntityType Name="Tbl_Contact">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TitleId" Type="Byte" Nullable="false" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="ContractType" Type="Byte" Nullable="false" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="PhoneNo" Type="String" Nullable="false" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="Department" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CompanyId" Type="Int32" Nullable="false" />
+          <Property Name="Status" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Tbl_Company" Relationship="CMSDbModel.FK_Tbl_Contact_Tbl_Company" FromRole="Tbl_Contact" ToRole="Tbl_Company" />
+          <NavigationProperty Name="Tbl_Title" Relationship="CMSDbModel.FK_Tbl_Contact_Tbl_Title" FromRole="Tbl_Contact" ToRole="Tbl_Title" />
+        </EntityType>
+        <Association Name="FK_Tbl_Contact_Tbl_Company">
+          <End Type="CMSDbModel.Tbl_Company" Role="Tbl_Company" Multiplicity="1" />
+          <End Type="CMSDbModel.Tbl_Contact" Role="Tbl_Contact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Company">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Tbl_Contact">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_Contact_Tbl_Title">
+          <End Type="CMSDbModel.Tbl_Title" Role="Tbl_Title" Multiplicity="1" />
+          <End Type="CMSDbModel.Tbl_Contact" Role="Tbl_Contact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Title">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Tbl_Contact">
+              <PropertyRef Name="TitleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -247,6 +251,7 @@
           <EntitySetMapping Name="Tbl_Company">
             <EntityTypeMapping TypeName="CMSDbModel.Tbl_Company">
               <MappingFragment StoreEntitySet="Tbl_Company">
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="CompanyABN_CAN" ColumnName="CompanyABN_CAN" />
@@ -286,21 +291,6 @@
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="UserSP_DeleteCompany" FunctionName="CMSDbModel.Store.UserSP_DeleteCompany" />
           <FunctionImportMapping FunctionImportName="UserSP_InsertCompany" FunctionName="CMSDbModel.Store.UserSP_InsertCompany" />
-          <EntitySetMapping Name="Tbl_Contact">
-            <EntityTypeMapping TypeName="CMSDbModel.Tbl_Contact">
-              <MappingFragment StoreEntitySet="Tbl_Contact">
-                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
-                <ScalarProperty Name="Department" ColumnName="Department" />
-                <ScalarProperty Name="PhoneNo" ColumnName="PhoneNo" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="ContractType" ColumnName="ContractType" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="TitleId" ColumnName="TitleId" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="UserSP_CompanyById" FunctionName="CMSDbModel.Store.UserSP_CompanyById">
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="UserSP_GetCompany" FunctionName="CMSDbModel.Store.UserSP_GetCompany" >
@@ -318,6 +308,22 @@
           <FunctionImportMapping FunctionImportName="UserSP_UpdateCompany" FunctionName="CMSDbModel.Store.UserSP_UpdateCompany" />
           <FunctionImportMapping FunctionImportName="UserSP_GetCompanyByName_URL" FunctionName="CMSDbModel.Store.UserSP_GetCompanyByName_URL">
           </FunctionImportMapping>
+          <EntitySetMapping Name="Tbl_Contact">
+            <EntityTypeMapping TypeName="CMSDbModel.Tbl_Contact">
+              <MappingFragment StoreEntitySet="Tbl_Contact">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="Department" ColumnName="Department" />
+                <ScalarProperty Name="PhoneNo" ColumnName="PhoneNo" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="ContractType" ColumnName="ContractType" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="TitleId" ColumnName="TitleId" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

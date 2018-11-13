@@ -17,7 +17,7 @@ namespace ContractManagementSystem.Data.Database
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Tbl_Company()
         {
-            this.Tbl_Contacts = new HashSet<Tbl_Contact>();
+            this.Tbl_Contact = new HashSet<Tbl_Contact>();
         }
     
         public int ID { get; set; }
@@ -25,8 +25,9 @@ namespace ContractManagementSystem.Data.Database
         public string CompanyABN_CAN { get; set; }
         public string Description { get; set; }
         public string URL { get; set; }
+        public bool Deleted { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tbl_Contact> Tbl_Contacts { get; set; }
+        public virtual ICollection<Tbl_Contact> Tbl_Contact { get; set; }
     }
 }

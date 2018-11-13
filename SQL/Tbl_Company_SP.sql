@@ -54,6 +54,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 USE [CMSDb]
+
 CREATE TABLE [dbo].[Tbl_Contact](
 	[ID] [int] NOT NULL,
 	[TitleId] [tinyint] NOT NULL,
@@ -64,11 +65,15 @@ CREATE TABLE [dbo].[Tbl_Contact](
 	[PhoneNo] [nchar](20) NOT NULL,
 	[Department] [varchar](100) NULL,
 	[CompanyId] [int] NOT NULL,
+	[Deleted] [bit] NOT NULL,
  CONSTRAINT [PK_Tbl_Contact] PRIMARY KEY CLUSTERED 
 (
 	[ID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[Tbl_Contact] ADD  CONSTRAINT [DF_Tbl_Contact_Deleted]  DEFAULT ((0)) FOR [Deleted]
 GO
 
 ALTER TABLE [dbo].[Tbl_Contact]  WITH CHECK ADD  CONSTRAINT [FK_Tbl_Contact_Tbl_Company] FOREIGN KEY([CompanyId])
@@ -130,7 +135,7 @@ BEGIN
 END
 
 GO 
-CREATE PROCEDURE [dbo].[UserSP_DeleteCompany]
+Create PROCEDURE [dbo].[UserSP_DeleteCompany]
     -- Add the parameters for the stored procedure here
     @ID int
 AS
@@ -140,8 +145,9 @@ BEGIN
     SET NOCOUNT ON;
 	if exists(select ID from [CMSDb].[dbo].[Tbl_Company] where [ID]=@ID )
 	begin
-		DELETE FROM[dbo].[Tbl_Company]
-		where ID = @ID
+		Update [CMSDb].[dbo].[Tbl_Company] 
+			set [deleted] = 1
+			where [ID] = @ID;
 	end
 
 END
@@ -163,7 +169,7 @@ BEGIN
 
 END
 Go 
-create PROCEDURE [dbo].[UserSP_GetCompany]
+alter PROCEDURE [dbo].[UserSP_GetCompany]
 (
 	@SearchValue NVARCHAR(50) = NULL,
 	@PageNo INT = 1,
@@ -179,7 +185,7 @@ create PROCEDURE [dbo].[UserSP_GetCompany]
  ; WITH CTE_Results AS 
 (
     SELECT [ID],[Name],[CompanyABN_CAN],[Description],[URL] from [dbo].[Tbl_Company] 
-	WHERE (@SearchValue IS NULL OR [Name] LIKE '%' + @SearchValue + '%') 
+	WHERE ([deleted]=0) And (@SearchValue IS NULL OR [Name] LIKE '%' + @SearchValue + '%') 
 	 	    ORDER BY
    	 CASE WHEN (@SortColumn = 'Name' AND @SortOrder='ASC')
                     THEN [Name]
@@ -243,7 +249,7 @@ GO
 --END
 
 
-create PROCEDURE [dbo].[UserSP_GetCompanyByName]
+create PROCEDURE [dbo].[UserSP_GetCompanyByName_URL]
 (
 	@SearchNameValue NVARCHAR(200) = NULL,
 	@SearchUrlValue NVARCHAR(50) = NULL
@@ -256,9 +262,8 @@ create PROCEDURE [dbo].[UserSP_GetCompanyByName]
   SET @SearchUrlValue = LTRIM(RTRIM(@SearchUrlValue))
   
     SELECT [ID],[Name],[CompanyABN_CAN],[Description],[URL] from [dbo].[Tbl_Company] 
-	WHERE (@SearchNameValue IS NULL OR [Name] LIKE '%' + @SearchNameValue + '%')  and (@SearchUrlValue IS NULL OR [URL] LIKE '%' + @SearchUrlValue + '%')
-	 	    ORDER BY [Name] ASC
-   	  
+	WHERE ([Deleted]=0)And(@SearchNameValue IS NULL OR [Name] LIKE '%' + @SearchNameValue + '%')  and (@SearchUrlValue IS NULL OR [URL] LIKE '%' + @SearchUrlValue + '%')
+	 	    ORDER BY [Name] ASC  	  
       
 
 

@@ -123,30 +123,16 @@ namespace ContractManagementSystem.MVC.Controllers
         {
             try
             {
-                _service.Delete(id);
-               
+                // only load partial view if result is succes or item is deleted
+              int result=  _service.Delete(id);
+              return Json(new { success = true }, JsonRequestBehavior.AllowGet);
             }
             catch
             {
 
             };
-            return RedirectToAction("Index");
+            return Json(new { success = false }, JsonRequestBehavior.AllowGet);
         }
-
-        //// POST: Company/Delete/5
-        //[HttpPost]
-        //public ActionResult Delete(int id, CompanyVM collection)
-        //{
-        //    try
-        //    {
-        //        _service.Delete(collection.ID);
-        //        return RedirectToAction("Index");
-        //    }
-        //    catch
-        //    {
-               
-        //    }
-        //    return View(collection);
-        //}
+       
     }
 }

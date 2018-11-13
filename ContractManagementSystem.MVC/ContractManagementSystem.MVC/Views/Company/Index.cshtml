@@ -4,7 +4,6 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
  
 <ol class="breadcrumb">
@@ -35,7 +34,7 @@
                             InsertionMode = InsertionMode.Replace, //target element(#patientList) will be replaced
                             UpdateTargetId = "Div_List",
                             LoadingElementId = "loader" // div with .gif loader - that is shown when data are loading
-                        },new { @class= "form-inline" }))
+                        },new { @class= "form-inline" ,@id= "filterForm" }))
                         {
                             string Name = "";
                             string Url = "";
@@ -122,9 +121,20 @@ buttons: {
         className: 'btn-default'
     }
 },
-callback: function (result) {
-    if (result) {
-        document.location.href = link;
+    callback: function (result) {
+        if (result) {          
+
+            $.ajax({
+                type: "GET",
+                url: link,              
+                success: function (data) {
+                    if (data.success) {
+                        alert();
+                        $('#filterForm').submit();
+                    }
+                }
+            });
+            e.preventDefault();
     }
 }
 });

@@ -1,0 +1,60 @@
+﻿@model ContractManagementSystem.BusinessLogic.ViewModel.ContactVM
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="card mb-3">
+    <div class="card-header">
+        <div class="row">
+            <div class="col-md-6"> <i class="fa fa-info-circle"></i> Company Details</div>
+            <div class="col-md-6">
+                <a href="@Url.Action("Edit", new {id=Model.ID })" class="btn btn-info  ">Edit</a>
+                @Html.ActionLink("back", "Index", null, new { @class = "btn btn-secondary " })
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="card-body">
+
+            <div class="form">
+                <div class="form-group row">
+                    @Html.LabelFor(model => model.FullName, htmlAttributes: new { @class = " col-md-3 col-form-label  " }):
+                    <div class="col-md-9 fa-underline ">
+                        @Html.DisplayFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control" } })
+
+                    </div>
+                </div>
+                <div class="form-group row">
+                    @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "col-md-3 col-form-label" }):
+                    <div class="col-md-9">
+                        @Html.DisplayFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                </div>
+                <div class="form-group row">
+                    @Html.LabelFor(model => model.ContractType, htmlAttributes: new { @class = "col-md-3 col-form-label" }):
+                    <div class="col-md-9">
+                        @{ var data = (ContractManagementSystem.BusinessLogic.Enum.ContractType)Model.ContractType;}
+                        @data
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    @Html.LabelFor(model => model.PhoneNo, new { @class = "col-md-3 col-form-label" }):
+                    <div class="col-md-9">
+                        @Html.DisplayFor(model => model.PhoneNo, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group row">
+                    @Html.LabelFor(model => model.Department, new { @class = "col-md-3 col-form-label" }):
+                    <div class="col-md-9">
+                        @Html.DisplayFor(model => model.Department, new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+

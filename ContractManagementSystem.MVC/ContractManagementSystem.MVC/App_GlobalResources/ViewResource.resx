@@ -130,6 +130,15 @@
     <value>Search</value>
   </data>
   <data name="SNo" xml:space="preserve">
-    <value>SNo</value>
+    <value>S. No.</value>
+  </data>
+  <data name="Actions" xml:space="preserve">
+    <value>Actions</value>
+  </data>
+  <data name="ContractType" xml:space="preserve">
+    <value>Contract Type</value>
+  </data>
+  <data name="Department" xml:space="preserve">
+    <value>Department</value>
   </data>
 </root>

@@ -1,0 +1,108 @@
+﻿@model ContractManagementSystem.BusinessLogic.Helper.Pager
+
+<ul class="pagination">
+
+    @if (Model.CurrentPage == 1)
+    {
+        <li class="page-item disabled">
+            <a class="page-link">First</a>
+        </li>
+    }
+    else
+    {
+        <li class="page-item ">
+            <a class="page-link" onclick="javascript:void(0);@string.Format(" GoTo_Page({0},{1})", 1, Model.PageSize);">
+                First
+            </a>
+        </li>
+    }
+
+
+    @if (Model.CurrentPage == 1)
+    {
+        <li class="page-item disabled">
+            <a class="page-link">Previous</a>
+        </li>
+    }
+    else
+    {
+        <li class="page-item">
+            <a class="page-link" onclick="javascript:void(0);@string.Format("GoTo_Page({0},{1})", (Model.CurrentPage == 1) ? 1 : Model.CurrentPage - 1, Model.PageSize);">Previous</a>
+        </li>
+    }
+
+    <li class="page-item disabled">
+        <a class="page-link">
+            @string.Format("Page {0} of {1}", (Model.TotalRecords == 0 ? 0 : Model.CurrentPage), Model.TotalPages)
+            &nbsp;&nbsp; - &nbsp;&nbsp;
+            @string.Format("Showing {0} of {1}", (Model.TotalRecords == 0) ? "0" : (((Model.CurrentPage - 1) * Model.PageSize + 1) + " - " + (((Model.CurrentPage - 1) * Model.PageSize + Model.PageSize) > Model.TotalRecords ? Model.TotalRecords : ((Model.CurrentPage - 1) * Model.PageSize + Model.PageSize))), Model.TotalRecords)
+        </a>
+    </li>
+
+    @if (Model.TotalPages == 0 || Model.CurrentPage == Model.TotalPages)
+    {
+        <li class="page-item disabled">
+            <a class="page-link">Next</a>
+        </li>
+    }
+    else
+    {
+        <li class="page-item  ">
+            <a class="page-link" onclick="javascript:void(0);@string.Format("GoTo_Page({0},{1})", (Model.CurrentPage == Model.TotalPages) ? Model.CurrentPage : Model.CurrentPage + 1, Model.PageSize);">Next</a>
+        </li>
+    }
+
+
+    @if (Model.TotalPages == 0 || Model.CurrentPage == Model.TotalPages)
+    {
+        <li class="page-item disabled">
+            <a class="page-link" >Last</a>
+        </li>
+    }
+    else
+    {
+        <li class="page-item ">
+            <a class="page-link last-page-text" onclick="javascript:void(0);@string.Format("GoTo_Page({0},{1})", Model.TotalPages, Model.PageSize);">Last</a>
+        </li>}
+
+    <li class="page-item ">
+        <span class="page-size">
+            @{
+                int[] pageSize = new int[] { 20, 50, 100, 200, 500 };
+                //string sel_disabled = Model.totalRecords == 0 ? "disabled=\"disabled\"" : "";
+                string opt_disabled = "";
+            }
+            <select id="page-size" class="form-control" onchange="@string.Format("GoTo_Page({0},{1})", 1, "$(this).val()");">
+                @for (int pindex = 0; pindex < pageSize.Length; pindex++)
+                {
+                    if (pageSize[pindex] < Model.TotalRecords)
+                    {
+                        opt_disabled = "";
+                    }
+                    else
+                    {
+                        if (!Enumerable.Range(pindex - 1 < 0 ? 0 : pageSize[(pindex - 1) < 0 ? 0 : pindex - 1], pageSize[((pindex + 1) >= pageSize.Length) ? pageSize.Length - 1 : pindex + 1]).Contains(Model.TotalRecords))
+                        {
+                            opt_disabled = "disabled=\"disabled\"";
+                        }
+                        else
+                        {
+                            opt_disabled = "";
+                        }
+                    }
+
+                    if (Model.PageSize == pageSize[pindex])
+                    {
+                        <option value="@pageSize[pindex]" selected="selected" @opt_disabled>@pageSize[pindex] Records</option>
+                    }
+                    else
+                    {
+                        <option value="@pageSize[pindex]" @opt_disabled>@pageSize[pindex] Records</option>
+                    }
+
+                }
+            </select>
+        </span>
+    </li>
+</ul>
+

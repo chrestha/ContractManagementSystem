@@ -43,7 +43,14 @@ namespace ContractManagementSystem.Repository.UnitOfWork
         }
         #endregion
 
-
+        #region Contacts
+        private IRepository<Tbl_Title> _title;
+        public IRepository<Tbl_Title> Titles
+        {
+            get { return _title ?? (_title = new RepositoryBase<Tbl_Title>(_context)); }
+            set { _title = value; }
+        }
+        #endregion
         /// <summary>
         /// 
         /// </summary>

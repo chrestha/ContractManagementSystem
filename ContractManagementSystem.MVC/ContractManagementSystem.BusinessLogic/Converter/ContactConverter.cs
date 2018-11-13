@@ -19,6 +19,9 @@ namespace ContractManagementSystem.BusinessLogic.Converter
             returnValue.ContractType = self.ContractType;
             returnValue.Email = self.Email;
             returnValue.TitleId = self.TitleId;
+            returnValue.CompanyId = self.CompanyId;
+     returnValue.Department = self.Department;
+            returnValue.Status = self.Status;
             return returnValue;
         }
 
@@ -32,9 +35,11 @@ namespace ContractManagementSystem.BusinessLogic.Converter
             returnValue.FirstName = self.FirstName;
             returnValue.LastName = self.LastName;
             returnValue.PhoneNo = self.PhoneNo;
+            returnValue.Department = self.Department;
             returnValue.ContractType = self.ContractType;
             returnValue.Email = self.Email;
             returnValue.TitleId = self.TitleId;
+            returnValue.Status = self.Status;
             returnValue.Title = self.Tbl_Title!=null?self.Tbl_Title.Title:"";
             return returnValue;
         }

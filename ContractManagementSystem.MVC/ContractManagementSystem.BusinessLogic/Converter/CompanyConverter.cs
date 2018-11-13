@@ -37,9 +37,9 @@ namespace ContractManagementSystem.BusinessLogic.Converter
             returnValue.Description = self.Description;
             returnValue.URL = self.URL;
             List<ContactVM> contacts = new List<ContactVM>();
-            if (self.Tbl_Contacts != null && self.Tbl_Contacts.Count > 0)
+            if (self.Tbl_Contact != null && self.Tbl_Contact.Count > 0)
             {
-                foreach (var contact in self.Tbl_Contacts)
+                foreach (var contact in self.Tbl_Contact)
                 {
                     contacts.Add(new ContactConverter().ConvertToModel(contact));
                 }

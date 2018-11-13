@@ -11,6 +11,7 @@ using System.Data;
 
 namespace ContractManagementSystem.BusinessLogic.DataManager
 {
+    //According to given instruction I have Created Stored procedure for CURD operation. I also mapped SP of create update and delete in ADO.net
     public class CompanyDM : BaseManager<CompanyConverter>, ICompanyDM
     {
         public List<CompanyVM> GetList(string searchValue, int CurrentPage, int PageSize, out int TotalRows)
@@ -98,6 +99,7 @@ namespace ContractManagementSystem.BusinessLogic.DataManager
             return result;
 
         }
+        //delete for end user 
         public int Delete(object id)
         {
             int result = 0;
@@ -107,6 +109,7 @@ namespace ContractManagementSystem.BusinessLogic.DataManager
                 {
                     //Get company using SP UserSP_CompanyById
                     Tbl_Company company = context.UserSP_CompanyById((int)id).FirstOrDefault();
+                    // my storeprocedure change delete status in database for Delete
                     context.Tbl_Company.Remove(company);
                     //will execute sp_DeleteStudentInfo 
                     context.SaveChanges();

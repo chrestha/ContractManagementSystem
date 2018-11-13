@@ -56,6 +56,8 @@
     <Compile Include="DataManager\Interface\ICompanyDM.cs" />
     <Compile Include="DataManager\Interface\IContactDM.cs" />
     <Compile Include="Enum\ContractType.cs" />
+    <Compile Include="Helper\FilterModel.cs" />
+    <Compile Include="Helper\Pager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\CompanyVM.cs" />
     <Compile Include="ViewModel\ContactVM.cs" />
@@ -73,6 +75,9 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_GlobalResources\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
