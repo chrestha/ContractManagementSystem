@@ -33,9 +33,7 @@ BEGIN
     -- SET NOCOUNT ON added to prevent extra result sets from
     -- interfering with SELECT statements.
     SET NOCOUNT ON;
-	INSERT INTO [CMSDb].[dbo].[Tbl_Company]([Name],[CompanyABN_CAN],[Description],[URL])
-        VALUES(@Name, @CompanyABN_CAN,@Description,@URL)
-		if not exists(select ID from [CMSDb].[dbo].[Tbl_Company] where [ID]=@ID )
+			if exists(select ID from [CMSDb].[dbo].[Tbl_Company] where [ID]=@ID )
 		begin
 			Update [CMSDb].[dbo].[Tbl_Company] 
 			set [Name] = @Name,[CompanyABN_CAN] = @CompanyABN_CAN,[Description]=@Description,[URL]=@URL
@@ -76,9 +74,8 @@ BEGIN
 	end
 
 END
-Go
-exec [UserSP_GetCompany] '',1,10,'Name','ASC'
-alter PROCEDURE [dbo].[UserSP_GetCompany]
+Go 
+create PROCEDURE [dbo].[UserSP_GetCompany]
 (
 	@SearchValue NVARCHAR(50) = NULL,
 	@PageNo INT = 1,
