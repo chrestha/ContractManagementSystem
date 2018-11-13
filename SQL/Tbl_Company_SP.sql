@@ -1,3 +1,87 @@
+USE [CMSDb]
+GO
+
+/****** Object:  Table [dbo].[Tbl_Company]    Script Date: 11/13/2018 5:37:45 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Tbl_Company](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [nvarchar](200) NOT NULL,
+	[CompanyABN_CAN] [nchar](10) NOT NULL,
+	[Description] [varchar](800) NULL,
+	[URL] [varchar](200) NOT NULL,
+ CONSTRAINT [PK_Tbl_Company] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+
+USE [CMSDb]
+GO
+
+/****** Object:  Table [dbo].[Tbl_Title]    Script Date: 11/13/2018 5:37:04 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Tbl_Title](
+	[ID] [tinyint] IDENTITY(1,1) NOT NULL,
+	[Title] [varchar](50) NOT NULL,
+ CONSTRAINT [PK_Tbl_Title] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+GO
+
+/****** Object:  Table [dbo].[Tbl_Contact]    Script Date: 11/13/2018 5:36:00 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+USE [CMSDb]
+CREATE TABLE [dbo].[Tbl_Contact](
+	[ID] [int] NOT NULL,
+	[TitleId] [tinyint] NOT NULL,
+	[FirstName] [varchar](200) NOT NULL,
+	[LastName] [varchar](200) NOT NULL,
+	[ContractType] [tinyint] NOT NULL,
+	[Email] [varchar](100) NOT NULL,
+	[PhoneNo] [nchar](20) NOT NULL,
+	[Department] [varchar](100) NULL,
+	[CompanyId] [int] NOT NULL,
+ CONSTRAINT [PK_Tbl_Contact] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[Tbl_Contact]  WITH CHECK ADD  CONSTRAINT [FK_Tbl_Contact_Tbl_Company] FOREIGN KEY([CompanyId])
+REFERENCES [dbo].[Tbl_Company] ([ID])
+GO
+
+ALTER TABLE [dbo].[Tbl_Contact] CHECK CONSTRAINT [FK_Tbl_Contact_Tbl_Company]
+GO
+
+ALTER TABLE [dbo].[Tbl_Contact]  WITH CHECK ADD  CONSTRAINT [FK_Tbl_Contact_Tbl_Title] FOREIGN KEY([TitleId])
+REFERENCES [dbo].[Tbl_Title] ([ID])
+GO
+
+ALTER TABLE [dbo].[Tbl_Contact] CHECK CONSTRAINT [FK_Tbl_Contact_Tbl_Title]
+GO
+
+
 Use CMSDb
 
 CREATE PROCEDURE [dbo].[UserSP_InsertCompany]
