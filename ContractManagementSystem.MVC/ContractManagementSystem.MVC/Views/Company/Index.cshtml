@@ -4,8 +4,114 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<div class="container-fluid">
+    <div class="row bg-title">
+        <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+            <h4 class="page-title">Student</h4>
+        </div>
+        <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+            <a href="@Url.Action("Create")" target="_blank" class="btn btn-danger pull-right m-l-20 hidden-xs hidden-sm waves-effect waves-light">Create New</a>
 
-<h2>Index</h2>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <div class="row">
+        @using (Html.BeginForm("Filter", "Student", FormMethod.Post, new { @class = "" }))
+        {
+            @*@Html.HiddenFor(x => x.Pager.CurrentPage, new { @id = "currPageNo" })
+        @Html.HiddenFor(x => x.Pager.PageSize, new { @id = "recordsPerPage" })
+        @Html.HiddenFor(x => x.Pager.TotalPages)
+        @Html.HiddenFor(x => x.Pager.TotalRecords)*@
+        <div class="col-sm-12">
+            <div class="white-box">
+                <h3 class="box-title"><b>@Resources.ViewResource.Filter</b></h3>
+
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        @Html.Label("Name", new { @class = "control-label col-md-2" })
+                        <div class="">
+                            @Html.TextBox("Name", new { @class = "form-control", @placeholder = Resources.ViewResource.Name })
+                        </div>
+                    </div> 
+                    <div class="col-md-2 col-md-offset-10">
+                        <button type="submit" class="btn btn-block btn-primary">@Resources.ViewResource.Search</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    }
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel">
+                <div class="panel-heading">Student List</div>
+                <div class="table-responsive">
+                    <table class="table table-hover manage-u-table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Resources.ViewResource.SNo
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Name)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.CompanyABN_CAN)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Description)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.URL)
+                                </th>
+                                <th width="300">MANAGE</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{int counter = 1;}
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @counter
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Name)
+                                    </td>
+
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CompanyABN_CAN)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Description)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.URL)
+                                    </td>
+                                    <td>
+                                        <a href="@Url.Action("Edit", new { id=item.ID})" class=" fa fa-pencil " title="update"></a> &nbsp;&nbsp;
+                                        <a href="@Url.Action("Details", new { id=item.ID})" class=" fa fa-info " title="update"></a> &nbsp;&nbsp;
+                                        <a href="@Url.Action("Delete", new { id=item.ID})" class="DeleteLink fa fa-trash text-danger " title="delete"></a>
+                                    </td>
+                                </tr>
+                                counter++;
+                            }
+                        </tbody>
+                    </table>
+                    <div>
+                        @*@{
+                            Html.RenderPartial("_Pager", Model.Pager);
+                        }*@
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*<h2>Index</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -53,7 +159,7 @@
         </tr>
     }
 
-</table>
+</table>*@
 @section Scripts{
  
     <script>
