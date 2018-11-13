@@ -1,3 +1,5 @@
+create database [CMSDb]
+
 USE [CMSDb]
 GO
 
