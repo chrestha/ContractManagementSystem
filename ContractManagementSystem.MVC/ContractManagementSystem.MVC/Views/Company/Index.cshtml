@@ -27,26 +27,57 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CompanyABN_CAN)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.URL)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CompanyABN_CAN)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.URL)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                <a href="@Url.Action("Delete", new { id=item.ID})" class="DeleteLink btn  btn-sm btn-danger ">delete</a>
+                <span class="oi oi-pencil"></span>
+            </td>
+        </tr>
+    }
 
 </table>
+@section Scripts{
+ 
+    <script>
+        $(document).on("click", ".DeleteLink", function (e) {
+            var link = $(this).attr("href"); // "get" the intended link in a var
+            e.preventDefault();
+
+            bootbox.confirm({
+                message: "Do you want to Delete This?",
+                buttons: {
+                    confirm: {
+                        label: 'confirm',
+                        className: 'btn-danger'
+                    },
+                    cancel: {
+                        label: 'cancel',
+                        className: 'btn-default'
+                    }
+                },
+                callback: function (result) {
+                    if (result) {
+                        document.location.href = link;
+                    }
+                }
+            });
+        });
+         
+    </script>
+}

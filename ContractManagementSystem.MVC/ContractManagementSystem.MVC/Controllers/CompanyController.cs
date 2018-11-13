@@ -101,32 +101,32 @@ namespace ContractManagementSystem.MVC.Controllers
         // GET: Company/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            CompanyVM company = _service.GetById(id);
-            if (company == null)
-            {
-                return HttpNotFound();
-            }
-            return View(company);
-        }
-
-        // POST: Company/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, CompanyVM collection)
-        {
             try
             {
-                _service.Delete(collection.ID);
-                return RedirectToAction("Index");
+                _service.Delete(id);
+               
             }
             catch
             {
-               
-            }
-            return View(collection);
+
+            };
+            return RedirectToAction("Index");
         }
+
+        //// POST: Company/Delete/5
+        //[HttpPost]
+        //public ActionResult Delete(int id, CompanyVM collection)
+        //{
+        //    try
+        //    {
+        //        _service.Delete(collection.ID);
+        //        return RedirectToAction("Index");
+        //    }
+        //    catch
+        //    {
+               
+        //    }
+        //    return View(collection);
+        //}
     }
 }
