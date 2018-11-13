@@ -75,12 +75,13 @@
 
 
                         @if (item.Status)
-                        {<a href="@Url.Action("Edit", new { id=item.ID})" class=" fa fa-pencil " title="update"></a> &nbsp; &nbsp;
-                            <a href="@Url.Action("Details", new { id=item.ID})" class=" fa fa-info " title="update"></a> &nbsp; &nbsp;
+                        {<a href="@Url.Action("Edit", new { id=item.ID})" class=" fa fa-pencil ml-1" title="update"></a> 
+                            <a href="@Url.Action("Details", new { id=item.ID})" class=" fa fa-info  ml-1 " title="update"></a>  
 
-                            <a href="@Url.Action("Delete", new { id=item.ID})" class="DeleteLink fa fa-trash text-danger " title="delete"></a><a href="@Url.Action("ChangeStatus", new { id=item.ID})" class="StatusLink fa fa-unlock text-info " title="Active"></a>}
+                            <a href="@Url.Action("Delete", new { id=item.ID})" class="DeleteLink fa fa-trash text-danger  ml-1" title="delete"></a>
+                        <a href="@Url.Action("ChangeStatus", new { id=item.ID})" class="StatusLink fa fa-unlock text-info ml-1" title="Deactivate"></a>}
                         else
-                        { <a href="@Url.Action("ChangeStatus", new { id=item.ID})" class="StatusLink fa fa-lock text-danger " title="Deactive"></a>}
+                        { <a href="@Url.Action("ChangeStatus", new { id=item.ID})" class="StatusLink fa fa-lock text-danger ml-1 " title="Activate" ></a>}
 
 
                     </td>
@@ -121,7 +122,7 @@
         });
     });
 
-    $(document).on("click", ".DeleteLink", function (e) {
+    $(document).on("click", ".StatusLink", function (e) {
         var link = $(this).attr("href"); // "get" the intended link in a var
         e.preventDefault();
 
