@@ -12,15 +12,11 @@ namespace ContractManagementSystem.MVC.Controllers
 {
     public class CompanyController : Controller
     {
-        protected ICompanyDM _service = null;
-        public CompanyController() : base()
-        {             
-            _service = new CompanyDM();
-        }
+        protected ICompanyDM _service ;        
 
-        public CompanyController(CompanyDM service = null)
-        {             
-            _service = service ?? new CompanyDM();
+        public CompanyController(ICompanyDM service )
+        {
+            this._service = service;
         }
        
         // GET: Company
@@ -34,7 +30,17 @@ namespace ContractManagementSystem.MVC.Controllers
         // GET: Company/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            CompanyVM company = new CompanyVM();
+            try
+            {
+                company = _service.GetById(id);              
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+            return View(company);
         }
 
         // GET: Company/Create

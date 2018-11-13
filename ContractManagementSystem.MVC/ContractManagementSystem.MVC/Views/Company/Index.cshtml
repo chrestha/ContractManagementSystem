@@ -43,10 +43,12 @@
                 @Html.DisplayFor(modelItem => item.URL)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                <a href="@Url.Action("Delete", new { id=item.ID})" class="DeleteLink btn  btn-sm btn-danger ">delete</a>
-                <span class="oi oi-pencil"></span>
+
+                <a href="@Url.Action("Edit", new { id=item.ID})" class=" fa fa-pencil " title="update"></a> &nbsp;&nbsp;
+                <a href="@Url.Action("Details", new { id=item.ID})" class=" fa fa-info " title="update"></a> &nbsp;&nbsp;
+
+                <a href="@Url.Action("Delete", new { id=item.ID})" class="DeleteLink fa fa-trash text-danger " title="delete"></a>
+
             </td>
         </tr>
     }
