@@ -43,6 +43,8 @@ CREATE TABLE [dbo].[Tbl_Title](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
+insert into [dbo].[Tbl_Title] values('Mr.');
+insert into [dbo].[Tbl_Title] values('Mrs.')
 GO
 
 /****** Object:  Table [dbo].[Tbl_Contact]    Script Date: 11/13/2018 5:36:00 PM ******/

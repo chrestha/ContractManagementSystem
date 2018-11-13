@@ -1,6 +1,8 @@
 
 using ContractManagementSystem.BusinessLogic.DataManager;
 using ContractManagementSystem.BusinessLogic.DataManager.Interface;
+using ContractManagementSystem.Repository.Interfaces;
+using ContractManagementSystem.Repository.UnitOfWork;
 using System;
 
 using Unity;
@@ -46,6 +48,8 @@ namespace ContractManagementSystem.MVC
             // TODO: Register your type's mappings here.
             // container.RegisterType<IProductRepository, ProductRepository>();
             container.RegisterType<ICompanyDM,CompanyDM>();
+            container.RegisterType<IUnitOfWork, UnitOfWork>();
+            container.RegisterType<IContactDM, ContactDM>();
         }
     
     }

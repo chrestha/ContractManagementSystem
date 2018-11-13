@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ContractManagementSystem.Repository.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ namespace ContractManagementSystem.BusinessLogic.DataManager.Interface
 {
     public class BaseManager
     {
-        //protected IUnitOfWork _unitOfWork;
+        protected IUnitOfWork _unitOfWork;
         public BaseManager()
         {
 

@@ -36,7 +36,7 @@ namespace ContractManagementSystem.Repository.UnitOfWork
 
         #region Contacts
         private IRepository<Tbl_Contact> _contact;
-        public IRepository<Tbl_Contact> contacts
+        public IRepository<Tbl_Contact> Contacts
         {
             get { return _contact ?? (_contact = new RepositoryBase<Tbl_Contact>(_context)); }
             set { _contact = value; }

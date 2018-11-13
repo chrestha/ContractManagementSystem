@@ -49,9 +49,12 @@
   <ItemGroup>
     <Compile Include="Converter\Base\IConverter.cs" />
     <Compile Include="Converter\CompanyConverter.cs" />
+    <Compile Include="Converter\ContactConverter.cs" />
     <Compile Include="DataManager\CompanyDM.cs" />
+    <Compile Include="DataManager\ContactDM.cs" />
     <Compile Include="DataManager\Interface\BaseManager.cs" />
     <Compile Include="DataManager\Interface\ICompanyDM.cs" />
+    <Compile Include="DataManager\Interface\IContactDM.cs" />
     <Compile Include="Enum\ContractType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\CompanyVM.cs" />
@@ -61,6 +64,10 @@
     <ProjectReference Include="..\ContractManagementSystem.Data\ContractManagementSystem.Data.csproj">
       <Project>{4e6c872f-c26f-4320-9645-c85e9b0be9e9}</Project>
       <Name>ContractManagementSystem.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ContractManagementSystem.Repository\ContractManagementSystem.Repository.csproj">
+      <Project>{EF422FCC-AD3A-457E-AD9B-4143263D36AD}</Project>
+      <Name>ContractManagementSystem.Repository</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

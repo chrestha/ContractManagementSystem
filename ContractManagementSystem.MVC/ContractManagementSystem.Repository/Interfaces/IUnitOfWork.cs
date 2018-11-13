@@ -10,7 +10,7 @@ namespace ContractManagementSystem.Repository.Interfaces
 {
     public interface IUnitOfWork
     {
-        IRepository<Tbl_Contact> contacts { get; set; }
+        IRepository<Tbl_Contact> Contacts { get; set; }
   
         /// <summary>
         /// Initilized SaveAsync method for Repository

@@ -195,6 +195,7 @@
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\UnityMvcActivator.cs" />
     <Compile Include="Controllers\CompanyController.cs" />
+    <Compile Include="Controllers\ContactController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -221,6 +222,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\Contact\" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\index.d.ts" />
@@ -232,6 +234,10 @@
     <ProjectReference Include="..\ContractManagementSystem.BusinessLogic\ContractManagementSystem.BusinessLogic.csproj">
       <Project>{a4dca23b-2c8c-4350-887b-a0a9fc38822e}</Project>
       <Name>ContractManagementSystem.BusinessLogic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ContractManagementSystem.Repository\ContractManagementSystem.Repository.csproj">
+      <Project>{EF422FCC-AD3A-457E-AD9B-4143263D36AD}</Project>
+      <Name>ContractManagementSystem.Repository</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

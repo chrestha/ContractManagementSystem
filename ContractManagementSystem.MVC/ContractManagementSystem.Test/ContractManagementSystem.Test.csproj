@@ -116,6 +116,10 @@
       <Project>{4e6c872f-c26f-4320-9645-c85e9b0be9e9}</Project>
       <Name>ContractManagementSystem.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ContractManagementSystem.MVC\ContractManagementSystem.MVC.csproj">
+      <Project>{F9143F25-1191-4FB4-8A35-592AB1A744F6}</Project>
+      <Name>ContractManagementSystem.MVC</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
