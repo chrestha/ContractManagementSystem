@@ -10,23 +10,13 @@
 namespace ContractManagementSystem.Data.Database
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class Tbl_Company
+    public partial class UserSP_CompanyById_Result
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Tbl_Company()
-        {
-            this.Tbl_Contacts = new HashSet<Tbl_Contact>();
-        }
-    
         public int ID { get; set; }
         public string Name { get; set; }
         public string CompanyABN_CAN { get; set; }
         public string Description { get; set; }
         public string URL { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tbl_Contact> Tbl_Contacts { get; set; }
     }
 }

@@ -18,7 +18,7 @@ namespace ContractManagementSystem.Data.Database
         public byte TitleId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public bool ContractType { get; set; }
+        public byte ContractType { get; set; }
         public string Email { get; set; }
         public string PhoneNo { get; set; }
         public string Department { get; set; }

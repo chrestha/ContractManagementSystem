@@ -17,6 +17,6 @@ namespace ContractManagementSystem.BusinessLogic.ViewModel
         public string Description { get; set; }
         [Required]
         public string URL { get; set; }
-        public  List<ContactVM> Tbl_Contact { get; set; }
+        public  List<ContactVM> Contacts { get; set; }
     }
 }
