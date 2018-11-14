@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace ContractManagementSystem.BusinessLogic.Enum
 {
+    /// <summary>
+    /// Contract Type Its value is fixed so no need to store it in database
+    /// </summary>
     public enum ContractType
     {
         [Display(Name ="Master Contract")]

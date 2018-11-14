@@ -5,7 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace ContractManagementSystem.BusinessLogic.Helper
-{
+{   
+    /// <summary>
+    /// Custom Pager Service 
+    /// </summary>
     public class Pager
     {
         public Pager()

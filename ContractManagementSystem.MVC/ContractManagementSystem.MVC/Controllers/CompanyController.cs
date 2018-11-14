@@ -10,8 +10,10 @@ using System.Web.Mvc;
 
 namespace ContractManagementSystem.MVC.Controllers
 {
+    //company Controller for company CURD operation
     public class CompanyController : Controller
     {
+        //we can Use Private also
         protected ICompanyDM _service ;        
 
         public CompanyController(ICompanyDM service )
@@ -20,17 +22,25 @@ namespace ContractManagementSystem.MVC.Controllers
         }
        
         // GET: Company
+        [HttpGet]
         public ActionResult Index()
         {            
             List<CompanyVM> list = _service.GetFilteredList("","");
             return View(list);
         }
+        [HttpGet]
         public ActionResult _Filter(string Name, string Url)
         {
              
             List<CompanyVM> list = _service.GetFilteredList(Name, Url);
             return PartialView("_Filter", list);
         }
+        /// <summary>
+        /// This action returns JSON data ie. Company Name and Id for jquery Autocomplete
+        /// </summary>
+        /// <param name="term">entered value</param>
+        /// <returns></returns>
+        [HttpGet]
         public JsonResult GetCompanyName(string term = "")
         {
             var objDatalist = _service.GetFilteredList().Where(c => !string.IsNullOrEmpty(c.Name))
@@ -42,6 +52,7 @@ namespace ContractManagementSystem.MVC.Controllers
         }
 
         // GET: Company/Details/5
+        [HttpGet]
         public ActionResult Details(int id)
         {
             CompanyVM company = new CompanyVM();

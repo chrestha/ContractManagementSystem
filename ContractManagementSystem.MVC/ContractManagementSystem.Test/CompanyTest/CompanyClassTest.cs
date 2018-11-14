@@ -34,6 +34,19 @@ namespace ContractManagementSystem.Test.CompanyTest
             Assert.NotNull(result);            
           
         }
+        [Fact]
+        public void Insert()
+        {
+            //arrange
+            var dataSource = new Mock<ICompanyDM>();
+            CompanyVM company = new CompanyVM() { ID = 1, Name = "Anish", CompanyABN_CAN = "2134123", Description = "", URL = "abc.com" };
+            dataSource.Setup(s => s.Insert(It.IsAny<CompanyVM>())).Returns(1).Verifiable();
+            CompanyController controller = new CompanyController(dataSource.Object);
+            ActionResult result = controller.Create(company) as ActionResult;
+            //assert
+            dataSource.Verify();
+            Assert.NotNull(result);
+        }
         //Due to lack of time I am not able to add all test cases
     }
 }

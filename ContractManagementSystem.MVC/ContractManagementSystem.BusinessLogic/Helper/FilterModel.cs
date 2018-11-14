@@ -7,6 +7,10 @@ using System.Threading.Tasks;
 
 namespace ContractManagementSystem.BusinessLogic.Helper
 {
+    /// <summary>
+    /// Filter model that support multiple view model
+    /// </summary>
+    /// <typeparam name="ItemToShowModel">Entity view Model</typeparam>
     public class SimpleMoldelFilter<ItemToShowModel>
       where ItemToShowModel : class
     {
